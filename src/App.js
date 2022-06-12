@@ -12,11 +12,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Browse our providers</h1>
-        <h3>Mental Wellness</h3>
-        <button>ON</button>
+        <div className='Header-Content'>
+          <h1 className='Title-main'>Browse our providers</h1>
+          <h3 className='Subtitle-main'>Mental Wellness</h3>
+          <button className='Location-btn'>
+            <img className='btn-img' src='./location_pin.png' alt='location pin' />
+            <strong>ON</strong>
+          </button>
+        </div>
       </header>
-      <section>
+      <section className='Provider-section'>
         <ProviderList />
       </section>
     </div>

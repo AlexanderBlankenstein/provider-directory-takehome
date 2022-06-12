@@ -16,14 +16,16 @@ export default function Provider({provider}) {
     }
 
     /**
-    * Checks to see if a avatar URL is given. 
+    * Checks to see if an avatar URL is given. 
     *  if blank then replaces with default
+    * @param url - the avatar url to "check"
+    * @return url - either defult avatar image or the one passed in
     */
-    function checkAvatarUrl() {
-        //TODO: check if avatar url is available or blank
-
-        //replace with default if non present.
-        return './default_avatar.png'
+    function checkAvatarUrl(url) {
+        if (url === "" || url == null) {
+            return './default_avatar.png';
+        }
+        return url;
     }
 
     //TODO: create function that scans through bio to find what profession they fall under.
@@ -32,7 +34,7 @@ export default function Provider({provider}) {
     return (
         <div>
             <label>
-                <img src={checkAvatarUrl()} alt={"avatar of provider"} />
+                <img src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
                 <div>{provider.name}, {provider.title}</div>
                 <div>Registered Social Worker</div>
             </label>

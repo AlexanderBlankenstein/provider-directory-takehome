@@ -39,8 +39,8 @@ export const fetchProviders = () => {
   )
 };
 
-const makePartialRepresentation = ({id, name, title, avatarUrl, bio, availabilty}) => ({
-  id, name, title, avatarUrl, bio, availabilty
+const makePartialRepresentation = ({id, name, title, avatarUrl, location, bio, availabilty}) => ({
+  id, name, title, avatarUrl,location, bio, availabilty
 });
 
 const fullDataset = [

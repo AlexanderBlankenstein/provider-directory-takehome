@@ -11,7 +11,7 @@ export default function Provider({provider}) {
     /**
     * Handle the click event if a user clicks on the given provider element.
     */
-    function handleProviderClick(){
+    function handleProviderClicked(){
         console.log("provider clicked");
         //TODO: grab provider ID and pass it onto a new react component.
     }
@@ -33,7 +33,7 @@ export default function Provider({provider}) {
     //  ie. registered social worker. this can be done by looking for the key words "is a".
 
     return (
-        <div className='provider-tile'>
+        <div className='provider-tile' onClick={() => {handleProviderClicked();}}>
             <div className='provider-heading'>
                 <img className='avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
                 <div className='provider-right'>

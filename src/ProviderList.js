@@ -53,6 +53,7 @@ class ProviderList extends Component {
 
         //filter out all the providers that dont fall within the provice selected
         let filteredList = this.filterList();
+        console.log(filteredList);
 
         //create the wrapper that displays the stats of how many providers were found within the province
         providerList.push(
@@ -61,11 +62,13 @@ class ProviderList extends Component {
             </div>
         );
 
-        //add each provider to the HTML List element. 
-        filteredList.map(provider => {
-            return providerList.push(<Provider key={provider.id} provider={provider} />)
-        })
-        
+        //add each provider to the HTML List element if it exists within the filtered list. 
+        if (filteredList.length > 0) {
+            filteredList.map(provider => {
+                return providerList.push(<Provider key={provider.id} provider={provider} />)
+            })
+        }
+
         return providerList;
     }
 

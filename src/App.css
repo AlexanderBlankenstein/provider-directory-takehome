@@ -6,7 +6,8 @@
 
 .App-header {
   background-color: #ffffff;
-  min-height: 50vh;
+  border: 2px solid #cfcfcf;
+  min-height: 25vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,8 +15,12 @@
   color: #000000;
 }
 
-.Header-Content {
+.Content {
   width: 50%;
+}
+
+.Header {
+  padding-left: 4em;
 }
 
 .Title-main {
@@ -26,7 +31,7 @@
 
 .Subtitle-main {
   text-align: left;
-  margin-top: 0%;
+  margin-top: 0.25em;
   font-size: calc(10px + 0.8vmin);
   color: #848484;
 }
@@ -78,3 +83,87 @@
 }
 
 /* List Styles */
+
+.Provider-section {
+  background-color: #f4f4f4;
+  border: 2px solid #cfcfcf;
+  border-top: none;
+  padding-bottom: 2em;
+  min-height: 25vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+}
+
+.Providers-num {
+  text-align: left;
+  margin-top: 0.75em;
+  font-size: calc(10px + 0.8vmin);
+  color: #000000;
+}
+
+.Provider-tile{
+  margin-top: 1em;
+  padding: 1em;
+  border-radius: 2px;
+  background-color: #ffffff;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+}
+
+.Provider-tile:hover {
+  background: #fafafa;
+  color: #000000;
+  border: 2px solid #c7c7c7;
+}
+
+.Provider-tile:active {
+  outline: none;
+  border: 2px solid #93c1fa;
+}
+
+.Provider-tile:focus {
+  outline: none;
+  background: #fafafa;
+  border: 2px solid #c7c7c7;
+}
+
+.Provider-heading {
+  display: grid;
+  grid-template-columns: auto max-content;
+  justify-content: left;
+}
+
+.Avatar-img {
+  height: 4em;
+  margin-right: 1em;
+}
+
+.Provider-right {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+
+.Provider-Name {
+
+}
+
+.Provider-Bio {
+  color: #282828;
+}
+
+.Provider-Availability {
+  text-align: left;
+  background-color: #e6e2ff;
+  color: #000000;
+  align-items: center;
+  border-radius: 24px;
+  box-sizing: border-box;
+  display: inline-flex;
+  height: 2.5em;
+  overflow: visible;
+  padding: 2px 24px;
+}

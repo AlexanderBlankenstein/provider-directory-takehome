@@ -1,4 +1,5 @@
 import React from 'react'
+import './App.css';
 
 /**
  * Display a given provider passed in by the provider list, and generate a HTML eleent to display.
@@ -32,14 +33,16 @@ export default function Provider({provider}) {
     //  ie. registered social worker. this can be done by looking for the key words "is a".
 
     return (
-        <div>
-            <label>
-                <img src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
-                <div>{provider.name}, {provider.title}</div>
-                <div>Registered Social Worker</div>
-            </label>
-            <p>{provider.bio}</p>
-            <div>{provider.availabilty}</div>
+        <div className='Provider-tile'>
+            <div className='Provider-heading'>
+                <img className='Avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
+                <div className='Provider-right'>
+                    <div className='Provider-Name'><strong>{provider.name}, {provider.title}</strong></div>
+                    <div>Registered Social Worker</div>
+                </div>
+            </div>
+            <p className='Provider-Bio'>{provider.bio}</p>
+            <div className='Provider-Availability'>Available {provider.availabilty}</div>
         </div>
     )
 }

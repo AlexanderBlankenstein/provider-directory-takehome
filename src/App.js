@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className='Header-Content'>
+        <div className='Content Header'>
           <h1 className='Title-main'>Browse our providers</h1>
           <h3 className='Subtitle-main'>Mental Wellness</h3>
           <button className='Location-btn'>
@@ -22,7 +22,9 @@ function App() {
         </div>
       </header>
       <section className='Provider-section'>
-        <ProviderList />
+        <div className='Content'>
+          <ProviderList />
+        </div>
       </section>
     </div>
   );

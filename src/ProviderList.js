@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {fetchProviders, fetchProvider} from "./api";
 import Provider from './Provider';
+import './App.css';
 
 /**
  * A component that will call the API for all providers, and generate a HTML list element to display.
@@ -43,10 +44,10 @@ class ProviderList extends Component {
     render() {
         return (
             <div>
-                <div>{this.state.numOfProviders} providers in Ontario</div>
-                <ul>
+                <div className='Providers-num'><strong>{this.state.numOfProviders}</strong> providers in Ontario</div>
+                <div>
                     {this.renderProviderList()}
-                </ul>
+                </div>
             </div>
         )
     }

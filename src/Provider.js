@@ -33,16 +33,16 @@ export default function Provider({provider}) {
     //  ie. registered social worker. this can be done by looking for the key words "is a".
 
     return (
-        <div className='Provider-tile'>
-            <div className='Provider-heading'>
-                <img className='Avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
-                <div className='Provider-right'>
-                    <div className='Provider-Name'><strong>{provider.name}, {provider.title}</strong></div>
+        <div className='provider-tile'>
+            <div className='provider-heading'>
+                <img className='avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
+                <div className='provider-right'>
+                    <div className='provider-Name'><strong>{provider.name}, {provider.title}</strong></div>
                     <div>Registered Social Worker</div>
                 </div>
             </div>
-            <p className='Provider-Bio'>{provider.bio}</p>
-            <div className='Provider-Availability'>Available {provider.availabilty}</div>
+            <p className='provider-Bio'>{provider.bio}</p>
+            <div className='provider-Availability'>Available {provider.availabilty}</div>
         </div>
     )
 }

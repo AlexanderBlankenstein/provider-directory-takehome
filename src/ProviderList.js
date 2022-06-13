@@ -44,7 +44,7 @@ class ProviderList extends Component {
     render() {
         return (
             <div>
-                <div className='Providers-num'><strong>{this.state.numOfProviders}</strong> providers in Ontario</div>
+                <div className='providers-num'><strong>{this.state.numOfProviders}</strong> providers in Ontario</div>
                 <div>
                     {this.renderProviderList()}
                 </div>

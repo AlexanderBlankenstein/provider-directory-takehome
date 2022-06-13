@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ProviderList from './ProviderList';
 import './App.css';
 
 /**
@@ -16,9 +17,11 @@ class Header extends Component {
     * When Mounted, set states for the province selection button 
     */
     componentDidMount() {
-        this.setState({ showProvinceMenu: false });
-        this.setState({ province: 'Ontario' })
-        this.setState({ provinceShort: 'ON' })
+        this.setState({
+            showProvinceMenu: false,
+            province: 'Ontario',
+            provinceShort: 'ON'
+        })
     }
 
     /**
@@ -88,38 +91,47 @@ class Header extends Component {
     render() {
         return (
             <div>
-                <h1 className='title-main'>Browse our providers</h1>
-                <h3 className='subtitle-main'>Mental Wellness</h3>
-                <div className='dropdown'>
-                    <button className='location-btn' onClick={() => {this.showMenu();}}>
-                        <img className='btn-img' src='./location_pin.png' alt='location pin' />
-                        <strong>{this.state.provinceShort}</strong>
-                    </button>
-                    {this.state.showProvinceMenu ? (
-                        <div className='dropdown-menu btn-grid'>
-                            <div>
-                                <div className="dropdown-heading">Select your region</div>
-                                <div className="dropdown-link">
-                                    <button className='location-btn' onClick={() => {this.setProvince('Alberta');}}>Alberta</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('British Columbia');}}>British Columbia</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Manitoba');}}>Manitoba</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('New Brunswick');}}>New Brunswick</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Newfoundland and Labrador');}}>Newfoundland and Labrador</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Northwest Territories');}}>Northwest Territories</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Nova Scotia');}}>Nova Scotia</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Nanavut');}}>Nanavut</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Ontario');}}>Ontario</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Prince Edward Island');}}>Prince Edward Island</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Quebec');}}>Quebec</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Saskatchewan');}}>Saskatchewan</button>
-                                    <button className='location-btn' onClick={() => {this.setProvince('Yukon');}}>Yukon</button>
+                <header className="app-header">
+                    <div className='content header'>
+                        <h1 className='title-main'>Browse our providers</h1>
+                        <h3 className='subtitle-main'>Mental Wellness</h3>
+                        <div className='dropdown'>
+                            <button className='location-btn' onClick={() => {this.showMenu();}}>
+                                <img className='btn-img' src='./location_pin.png' alt='location pin' />
+                                <strong>{this.state.provinceShort}</strong>
+                            </button>
+                            {this.state.showProvinceMenu ? (
+                                <div className='dropdown-menu btn-grid'>
+                                    <div>
+                                        <div className="dropdown-heading">Select your region</div>
+                                        <div className="dropdown-link">
+                                            <button className='location-btn' onClick={() => {this.setProvince('Alberta');}}>Alberta</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('British Columbia');}}>British Columbia</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Manitoba');}}>Manitoba</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('New Brunswick');}}>New Brunswick</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Newfoundland and Labrador');}}>Newfoundland and Labrador</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Northwest Territories');}}>Northwest Territories</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Nova Scotia');}}>Nova Scotia</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Nanavut');}}>Nanavut</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Ontario');}}>Ontario</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Prince Edward Island');}}>Prince Edward Island</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Quebec');}}>Quebec</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Saskatchewan');}}>Saskatchewan</button>
+                                            <button className='location-btn' onClick={() => {this.setProvince('Yukon');}}>Yukon</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="hidden"></div>
+                            )}
                         </div>
-                    ) : (
-                        <div className="hidden"></div>
-                    )}
-                </div>
+                    </div>
+                </header>
+                <section className='provider-section'>
+                    <div className='content'>
+                        <ProviderList province={this.state.province}/>
+                    </div>
+                </section>
             </div>
         )
     }

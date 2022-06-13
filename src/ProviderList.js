@@ -12,7 +12,8 @@ class ProviderList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            providers: []
+            providers: [],
+            province: 'Ontario'
         }
     }
 
@@ -22,11 +23,25 @@ class ProviderList extends Component {
     */
     async componentDidMount() {
         const list = await fetchProviders();
-        const num = list.length; 
+
         this.setState({
             providers: list,
-            numOfProviders: num
+            numOfProviders: list.length
         })
+    }
+
+    /**
+    * Filters out providers that don't fall within the province selected
+    * @return filteredList - The list of the providers found within the province
+    */
+    filterList() {
+        let filteredList = [];
+        for (let index = 0; index < this.state.numOfProviders; index++) {
+            if (this.state.providers[index].location.includes(this.props.province)) {
+                filteredList.push(this.state.providers[index]);
+            }
+        }
+        return filteredList;
     }
 
     /**
@@ -35,19 +50,29 @@ class ProviderList extends Component {
     */
     renderProviderList() {
         let providerList = []
-        this.state.providers.map(provider => {
+
+        //filter out all the providers that dont fall within the provice selected
+        let filteredList = this.filterList();
+
+        //create the wrapper that displays the stats of how many providers were found within the province
+        providerList.push(
+            <div className='providers-num'>
+                <strong>{filteredList.length}</strong> providers in {this.props.province}
+            </div>
+        );
+
+        //add each provider to the HTML List element. 
+        filteredList.map(provider => {
             return providerList.push(<Provider key={provider.id} provider={provider} />)
         })
+        
         return providerList;
     }
 
     render() {
         return (
             <div>
-                <div className='providers-num'><strong>{this.state.numOfProviders}</strong> providers in Ontario</div>
-                <div>
-                    {this.renderProviderList()}
-                </div>
+                <div>{this.renderProviderList()}</div>
             </div>
         )
     }

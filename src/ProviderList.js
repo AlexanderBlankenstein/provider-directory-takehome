@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {fetchProviders, fetchProvider} from "./api";
+import { fetchProviders } from "./api";
 import Provider from './Provider';
 import './App.css';
 
@@ -53,7 +53,6 @@ class ProviderList extends Component {
 
         //filter out all the providers that dont fall within the provice selected
         let filteredList = this.filterList();
-        console.log(filteredList);
 
         //create the wrapper that displays the stats of how many providers were found within the province
         providerList.push(

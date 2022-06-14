@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 /**
@@ -8,12 +9,15 @@ import './App.css';
  */
 export default function Provider({provider}) {
 
+    let navigate = useNavigate();
+
     /**
     * Handle the click event if a user clicks on the given provider element.
     */
     function handleProviderClicked(){
-        console.log("provider clicked");
-        //TODO: grab provider ID and pass it onto a new react component.
+        //grab provider ID and pass it onto a new react component.
+        let location = './Booking/' + provider.id;
+        navigate(location);
     }
 
     /**

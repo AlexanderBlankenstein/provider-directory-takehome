@@ -73,10 +73,18 @@ import './App.css';
         return url;
     }
 
+    /**
+    * Handler to toggle states for showFullBio
+    */
     showFullBioHandler = () => {
         this.props.setFullBio(!this.props.showFullBio);
     }
 
+    /**
+    * Return a provider's bio depending on length the user wishes for.  
+    *  if blank then replaces with default
+    * @return bio - a string that is either shortened or full lenth. 
+    */
     getBio() { 
         if (this.state.provider == '') {
             return "";

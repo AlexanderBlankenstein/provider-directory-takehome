@@ -116,6 +116,24 @@ import './App.css';
         }
         return position;
     }
+
+    /**
+    * builds string including list of all languages the provider speaks.
+    * @return languages - The string being "built".
+    */
+    displayLanguages() {
+        let languages = "";
+        if (this.state.provider.languages === undefined) {
+            return languages;
+        }
+
+        //if multiple languages, add a comma and add them to the string. 
+        languages = this.state.provider.languages[0];
+        for (let languageIndex = 1; languageIndex < this.state.provider.languages.length; languageIndex++) {
+            languages += ", " + this.state.provider.languages[languageIndex];
+        }
+        return languages;
+    }
      
     render() {
         return (
@@ -160,7 +178,7 @@ import './App.css';
                                 </div>
                                 <div className='info-right'>
                                     <div>language</div>
-                                    <div><strong>{this.state.provider.languages}</strong></div>
+                                    <div><strong>{this.displayLanguages()}</strong></div>
                                 </div>
                             </div>
                             <button className='book-btn'>Book with us</button>

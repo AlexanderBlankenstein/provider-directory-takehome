@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 /**
@@ -8,12 +9,15 @@ import './App.css';
  */
 export default function Provider({provider}) {
 
+    let navigate = useNavigate();
+
     /**
     * Handle the click event if a user clicks on the given provider element.
     */
     function handleProviderClicked(){
-        console.log("provider clicked");
-        //TODO: grab provider ID and pass it onto a new react component.
+        //grab provider ID and pass it onto a new react component.
+        let location = './Booking/' + provider.id;
+        navigate(location);
     }
 
     /**
@@ -24,24 +28,43 @@ export default function Provider({provider}) {
     */
     function checkAvatarUrl(url) {
         if (url === "" || url == null) {
-            return './default_avatar.png';
+            return './images/default_avatar.png';
         }
         return url;
     }
 
-    //TODO: create function that scans through bio to find what profession they fall under.
-    //  ie. registered social worker. this can be done by looking for the key words "is a".
+    /**
+    * Extracts the Providers position from their Bio.
+    * @return position - The position being "extracted".
+    */
+    function getPosition() {
+        //split bio after "is a" and remove all non Alpha characters or spaces, then split at every space
+        let splitBio = provider.bio.split("is a");
+        let bioWordsArray = splitBio[1].replace(/[^a-zA-Z0-9\s!?]+/g, '').split(" ");
+        let position = "";
+
+        //for every word in the split array, save to output and search for worker or counsellor key words
+        for (let wordIndex = 0; wordIndex < bioWordsArray.length; wordIndex++) {
+            let word = bioWordsArray[wordIndex];
+            position += (word + " ");
+            
+            if (word.toLowerCase() === "worker" || word.toLowerCase() === "counsellor") {
+                wordIndex = bioWordsArray.length + 1; 
+            }
+        }
+        return position;
+    }
 
     return (
         <div className='provider-tile' onClick={() => {handleProviderClicked();}}>
-            <div className='provider-heading'>
+            <div className='provider-split'>
                 <img className='avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
                 <div className='provider-right'>
                     <div className='provider-Name'><strong>{provider.name}, {provider.title}</strong></div>
-                    <div>Registered Social Worker</div>
+                    <div>{getPosition()}</div>
                 </div>
             </div>
-            <p className='provider-Bio'>{provider.bio}</p>
+            <p className='provider-bio'>{provider.bio.slice(0,200).concat("...")}</p>
             <div className='provider-Availability'>Available {provider.availabilty}</div>
         </div>
     )

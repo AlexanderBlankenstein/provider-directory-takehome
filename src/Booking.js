@@ -27,7 +27,6 @@ import './App.css';
     */
     async componentDidMount() {
         const provider = await fetchProvider(this.props.providerid);
-        console.log(provider);
         this.setState({
             provider: provider
         })
@@ -69,7 +68,7 @@ import './App.css';
     */
     checkAvatarUrl(url) {
         if (url === "" || url == null) {
-            return '/default_avatar.png';
+            return '/images/default_avatar.png';
         }
         return url;
     }
@@ -77,40 +76,54 @@ import './App.css';
      
     render() {
         return (
-            <div>
-                <div className='header-nav'>
-                    <div onClick={() => this.navigateHome()}>{this.navTextBuilder()}</div>
-                </div>
-                <div className='body-provider'>
-                    <div className='img-side'>
-                        <img className='avatar-img' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
+            <div className="booking-page">
+                <div className='booking-content'>
+                    <div className='header-nav'>
+                        <div onClick={() => this.navigateHome()}>{this.navTextBuilder()}</div>
                     </div>
-                    <div className='info-side'>
+                <div className='booking-row'>
+                    <div className='booking-left'>
+                        <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
+                    </div>
+                    <div className='booking-right'>
                         <div className='top'>
-                            <div className='provider-name'>{this.nameTextBuilder()}</div>
+                            <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
                             <div>Psychologist</div>
-                            <p>{this.state.provider.bio}</p>
+                            <p className='provider-bio'>{this.state.provider.bio}</p>
                             <button>Read Less ^</button>
                         </div>
                         <div className='bottom'>
-                            <div className='location'>
-                                <img className='avatar-img' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"location icon, a map with marker"} />
-                                <div>Location</div>
-                                <div>{this.state.provider.location}</div>
+                            <div className='info-row'>
+                                <div className='info-left'>
+                                    <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
+                                </div>
+                                <div className='info-right'>
+                                    <div>Location</div>
+                                    <div><strong>{this.state.provider.location}</strong></div>
+                                </div>
                             </div>
-                            <div className='Education'>
-                                <img className='avatar-img' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"education icon, a grad hat"} />
-                                <div>Education</div>
-                                <div>{this.state.provider.education}</div>
+                            <div className='info-row'>
+                                <div className='info-left'>
+                                    <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
+                                </div>
+                                <div className='info-right'>
+                                    <div>Education</div>
+                                    <div><strong>{this.state.provider.education}</strong></div>
+                                </div>
                             </div>
-                            <div className='language'>
-                                <img className='avatar-img' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"language icon, a globe"} />
-                                <div>language</div>
-                                <div>{this.state.provider.languages}</div>
+                            <div className='info-row'>
+                                <div className='info-left'>
+                                    <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
+                                </div>
+                                <div className='info-right'>
+                                    <div>language</div>
+                                    <div><strong>{this.state.provider.languages}</strong></div>
+                                </div>
                             </div>
                             <button className='book-btn'>Book with us</button>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         )

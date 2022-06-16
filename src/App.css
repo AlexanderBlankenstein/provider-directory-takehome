@@ -45,7 +45,7 @@
   text-align: left;
   background-color: #ffffff;
   color: #000000;
-  border: 1.5px solid #b9b9b9;
+  border: 3px solid #b9b9b9;
   align-items: center;
   border-radius: 24px;
   box-sizing: border-box;
@@ -74,7 +74,7 @@
 
 .location-btn:active {
   outline: none;
-  border: 2px solid #93c1fa;
+  border: 3px solid #93c1fa;
 }
 
 .location-btn:focus {
@@ -169,10 +169,14 @@
   border: 2px solid #c7c7c7;
 }
 
-.provider-heading {
+.provider-split {
   display: grid;
   grid-template-columns: auto max-content;
   justify-content: left;
+}
+
+.provider-Name {
+  font-size: 1.2em;
 }
 
 .avatar-img {
@@ -192,7 +196,7 @@
 
 .provider-Availability {
   text-align: left;
-  background-color: #f2eff4;
+  background-color: #eff1fe;
   color: #000000;
   align-items: center;
   border-radius: 24px;
@@ -201,4 +205,113 @@
   height: 2.5em;
   overflow: visible;
   padding: 2px 24px;
+}
+
+/* Booking Styles */
+
+.booking-page {
+  background-color: #f4f4f4;
+  border: 2px solid #cfcfcf;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  color: #000000;
+}
+
+.booking-content {
+  width: 60%;
+  margin-bottom: 4vh;
+}
+
+.header-nav {
+  font-size: 1em;
+  padding: 1em 0em;
+  margin: 1em;
+}
+
+.booking-row {
+  display: flex;
+}
+
+.booking-left {
+  padding: 0em 1em;
+  flex: 30%;
+}
+
+.avatar-img-square {
+  width: 100%;
+  height: auto;
+  border: 2px solid #cfcfcf;
+}
+
+.booking-right {
+  flex: 70%;
+}
+
+.top, .bottom {
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 1em;
+  margin-bottom: 0.2em;
+}
+
+.info-row {
+  display: flex;
+}
+
+.info-right {
+  padding-top: 1em;
+  flex: 80%;
+}
+
+.info-left {
+  padding: 0em;
+  flex: 10%;
+}
+
+.img {
+  height: 4em;
+  margin: 0em 0em 1em 0em;
+}
+
+.book-btn {
+  text-align: left;
+  background-color: #4b286d;
+  color: #ffffff;
+  border: 3px solid #4b286d;
+  align-items: center;
+  border-radius: 24px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.book-btn:hover {
+  background: #613889;
+  color: #ffffff;
+}
+
+.book-btn:active {
+  outline: none;
+  border: 3px solid #93c1fa;
+}
+
+.book-btn:focus {
+  outline: none;
+  background: #613889;
 }

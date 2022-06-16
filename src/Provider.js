@@ -28,7 +28,7 @@ export default function Provider({provider}) {
     */
     function checkAvatarUrl(url) {
         if (url === "" || url == null) {
-            return './default_avatar.png';
+            return './images/default_avatar.png';
         }
         return url;
     }
@@ -38,7 +38,7 @@ export default function Provider({provider}) {
 
     return (
         <div className='provider-tile' onClick={() => {handleProviderClicked();}}>
-            <div className='provider-heading'>
+            <div className='provider-split'>
                 <img className='avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
                 <div className='provider-right'>
                     <div className='provider-Name'><strong>{provider.name}, {provider.title}</strong></div>

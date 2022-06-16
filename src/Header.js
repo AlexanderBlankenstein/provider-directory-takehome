@@ -97,7 +97,7 @@ class Header extends Component {
                         <h3 className='subtitle-main'>Mental Wellness</h3>
                         <div className='dropdown'>
                             <button className='location-btn' onClick={() => {this.showMenu();}}>
-                                <img className='btn-img' src='./location_pin.png' alt='location pin' />
+                                <img className='btn-img' src='./images/location_pin.png' alt='location pin' />
                                 <strong>{this.state.provinceShort}</strong>
                             </button>
                             {this.state.showProvinceMenu ? (

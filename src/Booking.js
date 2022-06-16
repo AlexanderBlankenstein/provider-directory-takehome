@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProvider } from "./api";
 import './App.css';
@@ -73,6 +73,16 @@ import './App.css';
         return url;
     }
 
+    showFullBioHandler = () => {
+        this.props.setFullBio(!this.props.showFullBio);
+    }
+
+    getBio() { 
+        if (this.state.provider == '') {
+            return "";
+        }
+        return this.props.showFullBio ? this.state.provider.bio : this.state.provider.bio.slice(0,200).concat("...");
+    }
      
     render() {
         return (
@@ -89,8 +99,8 @@ import './App.css';
                         <div className='top'>
                             <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
                             <div>Psychologist</div>
-                            <p className='provider-bio'>{this.state.provider.bio}</p>
-                            <button>Read Less ^</button>
+                            <p className='provider-bio'>{this.getBio()}</p>
+                            <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
                         </div>
                         <div className='bottom'>
                             <div className='info-row'>
@@ -139,8 +149,9 @@ function addNavigateTo(Component) {
     function ComponentWithHook(props) {
         const navigate = useNavigate();
         const { providerid } = useParams();
+        const [showFullBio, setFullBio] = useState(false);
 
-        return <Component {...props} navigate={navigate} providerid ={ providerid } />;
+        return <Component {...props} navigate={navigate} providerid ={ providerid } showFullBio={showFullBio} setFullBio={setFullBio} />;
     }
     return ComponentWithHook;
 }

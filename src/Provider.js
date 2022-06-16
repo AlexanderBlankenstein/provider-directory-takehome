@@ -45,7 +45,7 @@ export default function Provider({provider}) {
                     <div>Registered Social Worker</div>
                 </div>
             </div>
-            <p className='provider-Bio'>{provider.bio}</p>
+            <p className='provider-bio'>{provider.bio.slice(0,200).concat("...")}</p>
             <div className='provider-Availability'>Available {provider.availabilty}</div>
         </div>
     )

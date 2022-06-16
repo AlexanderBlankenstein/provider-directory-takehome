@@ -86,10 +86,35 @@ import './App.css';
     * @return bio - a string that is either shortened or full lenth. 
     */
     getBio() { 
-        if (this.state.provider == '') {
+        if (this.state.provider.bio === undefined) {
             return "";
         }
         return this.props.showFullBio ? this.state.provider.bio : this.state.provider.bio.slice(0,200).concat("...");
+    }
+
+    /**
+    * Extracts the Providers position from their Bio.
+    * @return position - The position being "extracted".
+    */
+    getPosition() {
+        let position = "";
+        if (this.state.provider.bio === undefined) {
+            return position;
+        }
+        //split bio after "is a" and remove all non Alpha characters or spaces, then split at every space
+        let splitBio = this.state.provider.bio.split("is a");
+        let bioWordsArray = splitBio[1].replace(/[^a-zA-Z0-9\s!?]+/g, '').split(" ");
+
+        //for every word in the split array, save to output and search for worker or counsellor key words
+        for (let wordIndex = 0; wordIndex < bioWordsArray.length; wordIndex++) {
+            let word = bioWordsArray[wordIndex];
+            position += (word + " ");
+            
+            if (word.toLowerCase() === "worker" || word.toLowerCase() === "counsellor") {
+                wordIndex = bioWordsArray.length + 1; 
+            }
+        }
+        return position;
     }
      
     render() {
@@ -106,7 +131,7 @@ import './App.css';
                     <div className='booking-right'>
                         <div className='top'>
                             <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
-                            <div>Psychologist</div>
+                            <div>{this.getPosition()}</div>
                             <p className='provider-bio'>{this.getBio()}</p>
                             <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
                         </div>

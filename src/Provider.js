@@ -33,8 +33,27 @@ export default function Provider({provider}) {
         return url;
     }
 
-    //TODO: create function that scans through bio to find what profession they fall under.
-    //  ie. registered social worker. this can be done by looking for the key words "is a".
+    /**
+    * Extracts the Providers position from their Bio.
+    * @return position - The position being "extracted".
+    */
+    function getPosition() {
+        //split bio after "is a" and remove all non Alpha characters or spaces, then split at every space
+        let splitBio = provider.bio.split("is a");
+        let bioWordsArray = splitBio[1].replace(/[^a-zA-Z0-9\s!?]+/g, '').split(" ");
+        let position = "";
+
+        //for every word in the split array, save to output and search for worker or counsellor key words
+        for (let wordIndex = 0; wordIndex < bioWordsArray.length; wordIndex++) {
+            let word = bioWordsArray[wordIndex];
+            position += (word + " ");
+            
+            if (word.toLowerCase() === "worker" || word.toLowerCase() === "counsellor") {
+                wordIndex = bioWordsArray.length + 1; 
+            }
+        }
+        return position;
+    }
 
     return (
         <div className='provider-tile' onClick={() => {handleProviderClicked();}}>
@@ -42,7 +61,7 @@ export default function Provider({provider}) {
                 <img className='avatar-img' src={checkAvatarUrl(provider.avatar)} alt={"avatar of provider"} />
                 <div className='provider-right'>
                     <div className='provider-Name'><strong>{provider.name}, {provider.title}</strong></div>
-                    <div>Registered Social Worker</div>
+                    <div>{getPosition()}</div>
                 </div>
             </div>
             <p className='provider-bio'>{provider.bio.slice(0,200).concat("...")}</p>

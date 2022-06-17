@@ -3,7 +3,7 @@
 /**
  * We are mimicking a REST request here, so it takes a half sec to respond
  */
-const REQUEST_RESPONSE_TIME = 500
+const REQUEST_RESPONSE_TIME = 2000 //Note: Increased from 500 to 2000 to show loading animations
 
 /**
  * Fetch a a given provider by ID, and get the complete representation
@@ -40,8 +40,8 @@ export const fetchProviders = () => {
 };
 
 const makePartialRepresentation = ({id, name, title, avatarUrl, location, bio, availabilty}) => ({
-  id, name, title, avatarUrl,location, bio, availabilty
-});
+  id, name, title, avatarUrl,location, bio, availabilty 
+}); //Note: included location to api request so that I can avoid a mess of calling the api for each pervider on main page list view
 
 const fullDataset = [
   {

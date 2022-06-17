@@ -1,6 +1,8 @@
 import React, { Component, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProvider } from "./api";
+import { Calendar } from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import './App.css';
 
 
@@ -14,11 +16,10 @@ import './App.css';
     constructor(props) {
         super(props)
         this.state = {
-            provider: []
+            provider: [],
+            loading: true
         }
     }
-
-    //TODO: error handling to ensure id passed in is correct.
 
     /**
     * When Mounted, call "API" to provide all details for the provider whos id was passed in, and save it to the state
@@ -26,9 +27,22 @@ import './App.css';
     * saves provider to state
     */
     async componentDidMount() {
-        const provider = await fetchProvider(this.props.providerid);
+        let provider = [];
+        let loading = true;
+        let errorResult = false;
+        try {
+            provider = await fetchProvider(this.props.providerid);
+        } catch (error) {
+            console.log("Error: " + error);
+            errorResult = true;
+            loading = false;
+        }
+        loading = false;
+        
         this.setState({
-            provider: provider
+            provider: provider,
+            errorPersisted: errorResult,
+            loading: loading
         })
     }
 
@@ -71,6 +85,13 @@ import './App.css';
             return '/images/default_avatar.png';
         }
         return url;
+    }
+
+    /**
+    * Handler to toggle the state when the user asks to book now.
+    */
+    showCalendarHandler = () => {
+        this.props.setShowCalendar(!this.props.showCalendar);
     }
 
     /**
@@ -134,6 +155,31 @@ import './App.css';
         }
         return languages;
     }
+
+    /**
+    * Loading Animation for when the api takes a while to display content. 
+    * @return <div> - The HTML loading elements to display
+    */
+     renderLoadingAnimation() {
+        return (
+            <div className='center'>
+                <div className="load-wrapp">
+                    <div className="load">
+                        <div className="l-1 letter">L</div>
+                        <div className="l-2 letter">o</div>
+                        <div className="l-3 letter">a</div>
+                        <div className="l-4 letter">d</div>
+                        <div className="l-5 letter">i</div>
+                        <div className="l-6 letter">n</div>
+                        <div className="l-7 letter">g</div>
+                        <div className="l-8 letter">.</div>
+                        <div className="l-9 letter">.</div>
+                        <div className="l-10 letter">.</div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
      
     render() {
         return (
@@ -142,49 +188,70 @@ import './App.css';
                     <div className='header-nav'>
                         <div onClick={() => this.navigateHome()}>{this.navTextBuilder()}</div>
                     </div>
-                <div className='booking-row'>
-                    <div className='booking-left'>
-                        <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
-                    </div>
-                    <div className='booking-right'>
-                        <div className='top'>
-                            <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
-                            <div>{this.getPosition()}</div>
-                            <p className='provider-bio'>{this.getBio()}</p>
-                            <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
+                    {!this.state.loading ? ( //if not loading from API then show provider details else show loading animation
+                        <div>
+                            {this.props.showCalendar ? ( //if book now button clicked then show calendar, else hide it
+                                <div className='dropdown-menu calendar'>
+                                    <div>
+                                        <div className="dropdown-heading">Select Available Date</div>
+                                        <Calendar onChange={this.props.onChange} value={this.props.value} />
+                                    </div>
+                                    <button className='book-btn select-btn' onClick={this.showCalendarHandler}>Book Selected Date</button>
+                                </div>
+                            ) : (
+                                <div className="hidden"></div>
+                            )}
+                            {!this.state.errorPersisted ? ( //if no error found then show provider details, else show error
+                                <div className='booking-row'>
+                                    <div className='booking-left'>
+                                        <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
+                                    </div>
+                                    <div className='booking-right'>
+                                        <div className='top'>
+                                            <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
+                                            <div>{this.getPosition()}</div>
+                                            <p className='provider-bio'>{this.getBio()}</p>
+                                            <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
+                                        </div>
+                                        <div className='bottom'>
+                                            <div className='info-row'>
+                                                <div className='info-left'>
+                                                    <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
+                                                </div>
+                                                <div className='info-right'>
+                                                    <div>Location</div>
+                                                    <div><strong>{this.state.provider.location}</strong></div>
+                                                </div>
+                                            </div>
+                                            <div className='info-row'>
+                                                <div className='info-left'>
+                                                    <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
+                                                </div>
+                                                <div className='info-right'>
+                                                    <div>Education</div>
+                                                    <div><strong>{this.state.provider.education}</strong></div>
+                                                </div>
+                                            </div>
+                                            <div className='info-row'>
+                                                <div className='info-left'>
+                                                    <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
+                                                </div>
+                                                <div className='info-right'>
+                                                    <div>language</div>
+                                                    <div><strong>{this.displayLanguages()}</strong></div>
+                                                </div>
+                                            </div>
+                                            <button className='book-btn' onClick={this.showCalendarHandler}>Book with us</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div><strong>410: Error Loading Provider: Please Return.</strong></div>
+                            )}
                         </div>
-                        <div className='bottom'>
-                            <div className='info-row'>
-                                <div className='info-left'>
-                                    <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
-                                </div>
-                                <div className='info-right'>
-                                    <div>Location</div>
-                                    <div><strong>{this.state.provider.location}</strong></div>
-                                </div>
-                            </div>
-                            <div className='info-row'>
-                                <div className='info-left'>
-                                    <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
-                                </div>
-                                <div className='info-right'>
-                                    <div>Education</div>
-                                    <div><strong>{this.state.provider.education}</strong></div>
-                                </div>
-                            </div>
-                            <div className='info-row'>
-                                <div className='info-left'>
-                                    <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
-                                </div>
-                                <div className='info-right'>
-                                    <div>language</div>
-                                    <div><strong>{this.displayLanguages()}</strong></div>
-                                </div>
-                            </div>
-                            <button className='book-btn'>Book with us</button>
-                        </div>
-                    </div>
-                </div>
+                    ) : (
+                        this.renderLoadingAnimation()
+                    )}
                 </div>
             </div>
         )
@@ -192,19 +259,29 @@ import './App.css';
 }
 
 /**
- * Add hooks to the component so that useNavigate and useParams can work.
+ * Add hooks to the component so that useNavigate, useStates and useParams can work.
  * @param Component - the component to add hooks to.
  * @return ComponentWithHook - the component with the Hooks added on.
  */
-function addNavigateTo(Component) {
+function addHookTo(Component) {
     function ComponentWithHook(props) {
         const navigate = useNavigate();
         const { providerid } = useParams();
-        const [showFullBio, setFullBio] = useState(false);
+        const [ showFullBio, setFullBio ] = useState(false);
+        const [ showCalendar, setShowCalendar ] = useState(false);
+        const [ value, onChange ] = useState(new Date());
 
-        return <Component {...props} navigate={navigate} providerid ={ providerid } showFullBio={showFullBio} setFullBio={setFullBio} />;
+        return <Component {...props} 
+            navigate={navigate}
+            providerid ={ providerid } 
+            showFullBio={showFullBio} 
+            setFullBio={setFullBio} 
+            value={value} 
+            onChange={onChange}
+            showCalendar={showCalendar}
+            setShowCalendar={setShowCalendar} />;
     }
     return ComponentWithHook;
 }
 
-export default addNavigateTo(Booking);
+export default addHookTo(Booking);

@@ -20,17 +20,24 @@ import './App.css';
         }
     }
 
-    //TODO: error handling to ensure id passed in is correct.
-
     /**
     * When Mounted, call "API" to provide all details for the provider whos id was passed in, and save it to the state
     * Async call to wait until server responds. 
     * saves provider to state
     */
     async componentDidMount() {
-        const provider = await fetchProvider(this.props.providerid);
+        let provider = [];
+        let errorResult = false;
+        try {
+            provider = await fetchProvider(this.props.providerid);
+        } catch (error) {
+            console.log("Error: " + error);
+            errorResult = true;
+        }
+        
         this.setState({
-            provider: provider
+            provider: provider,
+            errorPersisted: errorResult
         })
     }
 
@@ -162,49 +169,53 @@ import './App.css';
                             ) : (
                                 <div className="hidden"></div>
                             )}
-                <div className='booking-row'>
-                    <div className='booking-left'>
-                        <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
-                    </div>
-                    <div className='booking-right'>
-                        <div className='top'>
-                            <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
-                            <div>{this.getPosition()}</div>
-                            <p className='provider-bio'>{this.getBio()}</p>
-                            <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
+                    {!this.state.errorPersisted ? (
+                        <div className='booking-row'>
+                            <div className='booking-left'>
+                                <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
+                            </div>
+                            <div className='booking-right'>
+                                <div className='top'>
+                                    <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
+                                    <div>{this.getPosition()}</div>
+                                    <p className='provider-bio'>{this.getBio()}</p>
+                                    <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
+                                </div>
+                                <div className='bottom'>
+                                    <div className='info-row'>
+                                        <div className='info-left'>
+                                            <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
+                                        </div>
+                                        <div className='info-right'>
+                                            <div>Location</div>
+                                            <div><strong>{this.state.provider.location}</strong></div>
+                                        </div>
+                                    </div>
+                                    <div className='info-row'>
+                                        <div className='info-left'>
+                                            <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
+                                        </div>
+                                        <div className='info-right'>
+                                            <div>Education</div>
+                                            <div><strong>{this.state.provider.education}</strong></div>
+                                        </div>
+                                    </div>
+                                    <div className='info-row'>
+                                        <div className='info-left'>
+                                            <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
+                                        </div>
+                                        <div className='info-right'>
+                                            <div>language</div>
+                                            <div><strong>{this.displayLanguages()}</strong></div>
+                                        </div>
+                                    </div>
+                                    <button className='book-btn' onClick={this.showCalendarHandler}>Book with us</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className='bottom'>
-                            <div className='info-row'>
-                                <div className='info-left'>
-                                    <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
-                                </div>
-                                <div className='info-right'>
-                                    <div>Location</div>
-                                    <div><strong>{this.state.provider.location}</strong></div>
-                                </div>
-                            </div>
-                            <div className='info-row'>
-                                <div className='info-left'>
-                                    <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
-                                </div>
-                                <div className='info-right'>
-                                    <div>Education</div>
-                                    <div><strong>{this.state.provider.education}</strong></div>
-                                </div>
-                            </div>
-                            <div className='info-row'>
-                                <div className='info-left'>
-                                    <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
-                                </div>
-                                <div className='info-right'>
-                                    <div>language</div>
-                                    <div><strong>{this.displayLanguages()}</strong></div>
-                                </div>
-                            </div>
-                            <button className='book-btn' onClick={this.showCalendarHandler}>Book with us</button>
-                        </div>
-                    </div>
-                </div>
+                    ) : (
+                        <div><strong>410: Error Loading Provider: Please Return.</strong></div>
+                    )}
                 </div>
             </div>
         )

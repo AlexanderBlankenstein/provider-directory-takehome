@@ -67,7 +67,6 @@ class ProviderList extends Component {
                 return providerList.push(<div key={provider.id}><Provider provider={provider} /></div>)
             })
         }
-
         return providerList;
     }
 

@@ -287,13 +287,26 @@
   justify-content: left;
 }
 
-.provider-Name {
-  font-size: 1.2em;
+@media (min-width: 721px) {
+  .provider-Name {
+    font-size: 1.2em;
+  }
+
+  .avatar-img {
+    height: 4em;
+    margin-right: 1em;
+  }
 }
 
-.avatar-img {
-  height: 4em;
-  margin-right: 1em;
+@media (max-width: 720px) {
+  .provider-Name {
+    font-size: 1em;
+  }
+
+  .avatar-img {
+    height: 3em;
+    margin-right: 1em;
+  }
 }
 
 .provider-right {

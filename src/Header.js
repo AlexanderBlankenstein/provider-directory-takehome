@@ -90,7 +90,7 @@ class Header extends Component {
 
     render() {
         return (
-            <div onClick={() => {this.showMenu();}}>
+            <div>
                 <header className="app-header">
                     <div className='content header'>
                         <h1 className='title-main'>Browse our providers</h1>

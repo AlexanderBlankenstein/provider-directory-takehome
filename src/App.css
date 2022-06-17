@@ -111,6 +111,89 @@
   background: var(--btn-white-huver);
 }
 
+/* Loading Animation */
+.load-wrapp {
+  text-align: center;
+  background-color: var(--btn-purple);
+  color: var(--white);
+  border: 3px solid var(--btn-purple);
+  align-items: center;
+  border-radius: 24px;
+  box-sizing: border-box;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  width: auto;
+  margin: 3em;
+}
+
+.center {
+  text-align: center;
+}
+
+.letter {
+  float: left;
+  font-size: 14px;
+  color: var(--white);
+}
+
+.load .letter {
+  animation-name: loading;
+  animation-duration: 1.6s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+}
+
+.l-1 {
+  animation-delay: 0.48s;
+}
+.l-2 {
+  animation-delay: 0.6s;
+}
+.l-3 {
+  animation-delay: 0.72s;
+}
+.l-4 {
+  animation-delay: 0.84s;
+}
+.l-5 {
+  animation-delay: 0.96s;
+}
+.l-6 {
+  animation-delay: 1.08s;
+}
+.l-7 {
+  animation-delay: 1.2s;
+}
+.l-8 {
+  animation-delay: 1.32s;
+}
+.l-9 {
+  animation-delay: 1.44s;
+}
+.l-10 {
+  animation-delay: 1.56s;
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 /* Dropdown Menu Styles */
 
 .dropdown-heading {

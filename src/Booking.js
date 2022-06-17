@@ -16,7 +16,8 @@ import './App.css';
     constructor(props) {
         super(props)
         this.state = {
-            provider: []
+            provider: [],
+            loading: true
         }
     }
 
@@ -27,17 +28,21 @@ import './App.css';
     */
     async componentDidMount() {
         let provider = [];
+        let loading = true;
         let errorResult = false;
         try {
             provider = await fetchProvider(this.props.providerid);
         } catch (error) {
             console.log("Error: " + error);
             errorResult = true;
+            loading = false;
         }
+        loading = false;
         
         this.setState({
             provider: provider,
-            errorPersisted: errorResult
+            errorPersisted: errorResult,
+            loading: loading
         })
     }
 
@@ -150,6 +155,31 @@ import './App.css';
         }
         return languages;
     }
+
+    /**
+    * Loading Animation for when the api takes a while to display content. 
+    * @return <div> - The HTML loading elements to display
+    */
+     renderLoadingAnimation() {
+        return (
+            <div className='center'>
+                <div className="load-wrapp">
+                    <div className="load">
+                        <div className="l-1 letter">L</div>
+                        <div className="l-2 letter">o</div>
+                        <div className="l-3 letter">a</div>
+                        <div className="l-4 letter">d</div>
+                        <div className="l-5 letter">i</div>
+                        <div className="l-6 letter">n</div>
+                        <div className="l-7 letter">g</div>
+                        <div className="l-8 letter">.</div>
+                        <div className="l-9 letter">.</div>
+                        <div className="l-10 letter">.</div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
      
     render() {
         return (
@@ -158,7 +188,9 @@ import './App.css';
                     <div className='header-nav'>
                         <div onClick={() => this.navigateHome()}>{this.navTextBuilder()}</div>
                     </div>
-                    {this.props.showCalendar ? (
+                    {!this.state.loading ? ( //if not loading from API then show provider details else show loading animation
+                        <div>
+                            {this.props.showCalendar ? ( //if book now button clicked then show calendar, else hide it
                                 <div className='dropdown-menu calendar'>
                                     <div>
                                         <div className="dropdown-heading">Select Available Date</div>
@@ -169,52 +201,56 @@ import './App.css';
                             ) : (
                                 <div className="hidden"></div>
                             )}
-                    {!this.state.errorPersisted ? (
-                        <div className='booking-row'>
-                            <div className='booking-left'>
-                                <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
-                            </div>
-                            <div className='booking-right'>
-                                <div className='top'>
-                                    <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
-                                    <div>{this.getPosition()}</div>
-                                    <p className='provider-bio'>{this.getBio()}</p>
-                                    <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
+                            {!this.state.errorPersisted ? ( //if no error found then show provider details, else show error
+                                <div className='booking-row'>
+                                    <div className='booking-left'>
+                                        <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
+                                    </div>
+                                    <div className='booking-right'>
+                                        <div className='top'>
+                                            <div className='provider-name'><strong>{this.nameTextBuilder()}</strong></div>
+                                            <div>{this.getPosition()}</div>
+                                            <p className='provider-bio'>{this.getBio()}</p>
+                                            <button className='less-more-btn' onClick={this.showFullBioHandler}>Read {this.props.showFullBio ? "less ▲" : "more ▼"}</button>
+                                        </div>
+                                        <div className='bottom'>
+                                            <div className='info-row'>
+                                                <div className='info-left'>
+                                                    <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
+                                                </div>
+                                                <div className='info-right'>
+                                                    <div>Location</div>
+                                                    <div><strong>{this.state.provider.location}</strong></div>
+                                                </div>
+                                            </div>
+                                            <div className='info-row'>
+                                                <div className='info-left'>
+                                                    <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
+                                                </div>
+                                                <div className='info-right'>
+                                                    <div>Education</div>
+                                                    <div><strong>{this.state.provider.education}</strong></div>
+                                                </div>
+                                            </div>
+                                            <div className='info-row'>
+                                                <div className='info-left'>
+                                                    <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
+                                                </div>
+                                                <div className='info-right'>
+                                                    <div>language</div>
+                                                    <div><strong>{this.displayLanguages()}</strong></div>
+                                                </div>
+                                            </div>
+                                            <button className='book-btn' onClick={this.showCalendarHandler}>Book with us</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='bottom'>
-                                    <div className='info-row'>
-                                        <div className='info-left'>
-                                            <img className='img' src='/images/location.png' alt={"location icon, a map with marker"} />
-                                        </div>
-                                        <div className='info-right'>
-                                            <div>Location</div>
-                                            <div><strong>{this.state.provider.location}</strong></div>
-                                        </div>
-                                    </div>
-                                    <div className='info-row'>
-                                        <div className='info-left'>
-                                            <img className='img' src='/images/education.png' alt={"education icon, a grad hat"} />
-                                        </div>
-                                        <div className='info-right'>
-                                            <div>Education</div>
-                                            <div><strong>{this.state.provider.education}</strong></div>
-                                        </div>
-                                    </div>
-                                    <div className='info-row'>
-                                        <div className='info-left'>
-                                            <img className='img' src='/images/language.png' alt={"language icon, a globe"} />
-                                        </div>
-                                        <div className='info-right'>
-                                            <div>language</div>
-                                            <div><strong>{this.displayLanguages()}</strong></div>
-                                        </div>
-                                    </div>
-                                    <button className='book-btn' onClick={this.showCalendarHandler}>Book with us</button>
-                                </div>
-                            </div>
+                            ) : (
+                                <div><strong>410: Error Loading Provider: Please Return.</strong></div>
+                            )}
                         </div>
                     ) : (
-                        <div><strong>410: Error Loading Provider: Please Return.</strong></div>
+                        this.renderLoadingAnimation()
                     )}
                 </div>
             </div>
@@ -223,16 +259,16 @@ import './App.css';
 }
 
 /**
- * Add hooks to the component so that useNavigate and useParams can work.
+ * Add hooks to the component so that useNavigate, useStates and useParams can work.
  * @param Component - the component to add hooks to.
  * @return ComponentWithHook - the component with the Hooks added on.
  */
-function addNavigateTo(Component) {
+function addHookTo(Component) {
     function ComponentWithHook(props) {
         const navigate = useNavigate();
         const { providerid } = useParams();
-        const [showFullBio, setFullBio] = useState(false);
-        const [showCalendar, setShowCalendar] = useState(false);
+        const [ showFullBio, setFullBio ] = useState(false);
+        const [ showCalendar, setShowCalendar ] = useState(false);
         const [ value, onChange ] = useState(new Date());
 
         return <Component {...props} 
@@ -248,4 +284,4 @@ function addNavigateTo(Component) {
     return ComponentWithHook;
 }
 
-export default addNavigateTo(Booking);
+export default addHookTo(Booking);

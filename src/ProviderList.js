@@ -64,7 +64,7 @@ class ProviderList extends Component {
         //add each provider to the HTML List element if it exists within the filtered list. 
         if (filteredList.length > 0) {
             filteredList.map(provider => {
-                return providerList.push(<Provider key={provider.id} provider={provider} />)
+                return providerList.push(<div key={provider.id}><Provider provider={provider} /></div>)
             })
         }
 
@@ -72,11 +72,7 @@ class ProviderList extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <div>{this.renderProviderList()}</div>
-            </div>
-        )
+        return (this.renderProviderList())
     }
 }
 

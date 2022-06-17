@@ -1,6 +1,8 @@
 import React, { Component, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProvider } from "./api";
+import { Calendar } from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import './App.css';
 
 
@@ -74,6 +76,13 @@ import './App.css';
     }
 
     /**
+    * Handler to toggle the state when the user asks to book now.
+    */
+    showCalendarHandler = () => {
+        this.props.setShowCalendar(!this.props.showCalendar);
+    }
+
+    /**
     * Handler to toggle states for showFullBio
     */
     showFullBioHandler = () => {
@@ -142,6 +151,17 @@ import './App.css';
                     <div className='header-nav'>
                         <div onClick={() => this.navigateHome()}>{this.navTextBuilder()}</div>
                     </div>
+                    {this.props.showCalendar ? (
+                                <div className='dropdown-menu calendar'>
+                                    <div>
+                                        <div className="dropdown-heading">Select Available Date</div>
+                                        <Calendar onChange={this.props.onChange} value={this.props.value} />
+                                    </div>
+                                    <button className='book-btn select-btn' onClick={this.showCalendarHandler}>Book Selected Date</button>
+                                </div>
+                            ) : (
+                                <div className="hidden"></div>
+                            )}
                 <div className='booking-row'>
                     <div className='booking-left'>
                         <img className='avatar-img-square' src={this.checkAvatarUrl(this.state.provider.avatar)} alt={"avatar of provider"} />
@@ -181,7 +201,7 @@ import './App.css';
                                     <div><strong>{this.displayLanguages()}</strong></div>
                                 </div>
                             </div>
-                            <button className='book-btn'>Book with us</button>
+                            <button className='book-btn' onClick={this.showCalendarHandler}>Book with us</button>
                         </div>
                     </div>
                 </div>
@@ -201,8 +221,18 @@ function addNavigateTo(Component) {
         const navigate = useNavigate();
         const { providerid } = useParams();
         const [showFullBio, setFullBio] = useState(false);
+        const [showCalendar, setShowCalendar] = useState(false);
+        const [ value, onChange ] = useState(new Date());
 
-        return <Component {...props} navigate={navigate} providerid ={ providerid } showFullBio={showFullBio} setFullBio={setFullBio} />;
+        return <Component {...props} 
+            navigate={navigate}
+            providerid ={ providerid } 
+            showFullBio={showFullBio} 
+            setFullBio={setFullBio} 
+            value={value} 
+            onChange={onChange}
+            showCalendar={showCalendar}
+            setShowCalendar={setShowCalendar} />;
     }
     return ComponentWithHook;
 }

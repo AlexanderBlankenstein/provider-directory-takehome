@@ -368,3 +368,13 @@
 .less-more-btn:active {
   color: var(--btn-blue-active);
 }
+
+.calendar {
+  position: absolute;
+  z-index: 1;
+  top: 25%;
+}
+
+.select-btn {
+  margin-top: 1em;
+}
